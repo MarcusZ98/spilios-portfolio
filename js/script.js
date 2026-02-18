@@ -262,8 +262,9 @@ function initSlideshows(){
 
 }
 
+
 /* =========================
-   INIT
+INIT
 ========================= */
 
 renderProjects();
