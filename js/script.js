@@ -235,45 +235,32 @@ document.addEventListener("click", e => {
 
 function initSlideshows(){
 
-  const slideshows = document.querySelectorAll(".slideshow");
-
-  slideshows.forEach(slideshow => {
+  document.querySelectorAll(".slideshow").forEach(slideshow=>{
 
     const slides = slideshow.querySelectorAll(".slide");
-    const prevBtn = slideshow.querySelector(".prev");
-    const nextBtn = slideshow.querySelector(".next");
+    const prev = slideshow.querySelector(".prev");
+    const next = slideshow.querySelector(".next");
 
     let index = 0;
 
     function showSlide(i){
-      slides.forEach(slide => slide.classList.remove("active"));
+      slides.forEach(s=>s.classList.remove("active"));
       slides[i].classList.add("active");
     }
 
-    /* NEXT */
-    if(nextBtn){
-      nextBtn.addEventListener("click", ()=>{
-        index = (index + 1) % slides.length;
-        showSlide(index);
-      });
-    }
+    next.addEventListener("click", ()=>{
+      index = (index + 1) % slides.length;
+      showSlide(index);
+    });
 
-    /* PREV */
-    if(prevBtn){
-      prevBtn.addEventListener("click", ()=>{
-        index = (index - 1 + slides.length) % slides.length;
-        showSlide(index);
-      });
-    }
+    prev.addEventListener("click", ()=>{
+      index = (index - 1 + slides.length) % slides.length;
+      showSlide(index);
+    });
 
   });
 
 }
-
-initSlideshows();
-
-
-
 
 /* =========================
    INIT

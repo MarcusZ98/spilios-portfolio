@@ -94,12 +94,36 @@
 }
 
 .slide{
-  width:100%;
   display:none;
+  position:relative;
 }
 
 .slide.active{
   display:block;
+}
+
+.slide img{
+  width:100%;
+  display:block;
+  border-radius:14px;
+}
+
+.slide-text{
+  position:absolute;
+  bottom:0;
+  left:0;
+  right:0;
+
+  padding:20px 24px;
+  color:white;
+  font-size:15px;
+
+  background: linear-gradient(
+    to top,
+    rgba(0,0,0,0.9),
+    rgba(0,0,0,0.7),
+    rgba(0,0,0,0)
+  );
 }
 
 .slide-btn{
