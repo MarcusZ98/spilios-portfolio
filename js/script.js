@@ -11,8 +11,13 @@ function loadComponent(id, file){
     });
 }
 
-loadComponent("header", "header.html");
-loadComponent("footer", "footer.html");
+/* auto detect depth */
+const path = window.location.pathname.includes("detailed-projects")
+  ? "../"
+  : "";
+
+loadComponent("header", path + "header.html");
+loadComponent("footer", path + "footer.html");
 
 
 /* =========================
@@ -70,27 +75,34 @@ function renderProjects(){
 
 
 /* =========================
-   MODAL SYSTEM
+   OPEN PROJECT MODAL
 ========================= */
 
 function openProjectModal(project){
 
   const modal = document.getElementById("project-modal");
   const modalContent = document.getElementById("modal-content");
-
   if(!modal) return;
 
-  /* find index for NEXT button */
-const index = projects.findIndex(p => p.id === project.id);
+  const index = projects.findIndex(p => p.id === project.id);
+  const nextProject = projects[(index + 1) % projects.length];
+  const prevProject = projects[(index - 1 + projects.length) % projects.length];
 
-const nextProject = projects[(index + 1) % projects.length];
-const prevProject = projects[(index - 1 + projects.length) % projects.length];
-
-
-  /* build gallery */
+  /* BUILD GALLERY */
   let galleryHTML = "";
-  project.gallery.forEach(img=>{
-    galleryHTML += `<img src="${img}" class="modal-gallery-img">`;
+
+  project.gallery.forEach(file => {
+    const ext = file.split('.').pop().toLowerCase();
+
+    if(ext === "mp4" || ext === "webm"){
+      galleryHTML += `
+        <video class="modal-gallery-media" muted loop playsinline controls>
+          <source src="${file}" type="video/mp4">
+        </video>
+      `;
+    } else {
+      galleryHTML += `<img src="${file}" class="modal-gallery-media">`;
+    }
   });
 
   modalContent.innerHTML = `
@@ -112,28 +124,29 @@ const prevProject = projects[(index - 1 + projects.length) % projects.length];
       ${galleryHTML}
     </div>
 
-<div class="modal-bottom-buttons">
+    <div class="modal-bottom-buttons">
+      <button class="modal-btn modal-prev" data-prev="${prevProject.id}">
+        ← Previous
+      </button>
 
-  <button class="modal-btn modal-prev" data-prev="${prevProject.id}">
-    ← Previous
-  </button>
+      <a href="detailed-projects/${project.detailsPage}" class="modal-btn modal-details">
+        Detailed View
+      </a>
 
-  <a href="detailed-projects/${project.detailsPage}" class="modal-btn modal-details">
-    Detailed View
-  </a>
-
-  <button class="modal-btn modal-next" data-next="${nextProject.id}">
-    Next →
-  </button>
-
-</div>
-
+      <button class="modal-btn modal-next" data-next="${nextProject.id}">
+        Next →
+      </button>
+    </div>
   `;
 
   modal.style.display = "flex";
+  modal.scrollTop = 0; // reset scroll top
 }
 
 
+/* =========================
+   MODAL CLICK HANDLING
+========================= */
 
 function setupModal(){
 
@@ -142,27 +155,23 @@ function setupModal(){
 
   document.addEventListener("click", e => {
 
-    /* PREVIOUS PROJECT */
-if(e.target.classList.contains("modal-prev")){
-  const prevId = e.target.dataset.prev;
-  const prevProject = projects.find(p => p.id === prevId);
-  if(prevProject) openProjectModal(prevProject);
-}
-
-      /* NEXT PROJECT BUTTON */
-  if(e.target.classList.contains("modal-next")){
-    const nextId = e.target.dataset.next;
-    const nextProject = projects.find(p => p.id === nextId);
-    if(nextProject) openProjectModal(nextProject);
-  }
-
     /* OPEN OVERVIEW */
     if(e.target.classList.contains("btn-overview")){
       const id = e.target.dataset.id;
       const project = projects.find(p => p.id === id);
-      if(!project) return;
+      if(project) openProjectModal(project);
+    }
 
-      openProjectModal(project);
+    /* NEXT */
+    if(e.target.classList.contains("modal-next")){
+      const next = projects.find(p => p.id === e.target.dataset.next);
+      if(next) openProjectModal(next);
+    }
+
+    /* PREV */
+    if(e.target.classList.contains("modal-prev")){
+      const prev = projects.find(p => p.id === e.target.dataset.prev);
+      if(prev) openProjectModal(prev);
     }
 
     /* CLOSE BUTTON */
@@ -177,39 +186,92 @@ if(e.target.classList.contains("modal-prev")){
   });
 }
 
+
+/* =========================
+   FULLSCREEN GALLERY VIEWER
+========================= */
+
 function setupGalleryViewer(){
 
   const viewer = document.getElementById("image-viewer");
-  const viewerImg = document.getElementById("viewer-img");
-
+  const viewerContent = document.getElementById("viewer-content");
   if(!viewer) return;
 
-  document.addEventListener("click", e => {
+document.addEventListener("click", e => {
 
-    /* CLICK GALLERY IMAGE */
-    if(e.target.classList.contains("modal-gallery-img")){
-      viewer.style.display = "flex";
-      viewerImg.src = e.target.src;
-    }
+  if(e.target.tagName === "VIDEO") return;
 
-    /* CLICK OUTSIDE TO CLOSE */
-    if(e.target === viewer){
-      viewer.style.display = "none";
+  if(e.target.classList.contains("modal-gallery-media")){
 
-      document.addEventListener("click", e => {
+    const src = e.target.src;
+    if(!src) return;
 
+    viewerContent.innerHTML = `
+      <img src="${src}"
+      style="max-width:90vw;max-height:90vh;border-radius:12px;">
+    `;
+
+    viewer.style.display = "flex";
+  }
+
+  if(e.target === viewer){
+    viewer.style.display = "none";
+    viewerContent.innerHTML = "";
+  }
 });
 
-    }
-  });
 
-  /* ESC KEY CLOSE */
   document.addEventListener("keydown", e=>{
     if(e.key === "Escape"){
       viewer.style.display = "none";
+      viewerContent.innerHTML = "";
     }
   });
 }
+
+/* =========================
+    SLIDESHOWS (IF ANY)
+========================= */
+
+function initSlideshows(){
+
+  const slideshows = document.querySelectorAll(".slideshow");
+
+  slideshows.forEach(slideshow => {
+
+    const slides = slideshow.querySelectorAll(".slide");
+    const prevBtn = slideshow.querySelector(".prev");
+    const nextBtn = slideshow.querySelector(".next");
+
+    let index = 0;
+
+    function showSlide(i){
+      slides.forEach(slide => slide.classList.remove("active"));
+      slides[i].classList.add("active");
+    }
+
+    /* NEXT */
+    if(nextBtn){
+      nextBtn.addEventListener("click", ()=>{
+        index = (index + 1) % slides.length;
+        showSlide(index);
+      });
+    }
+
+    /* PREV */
+    if(prevBtn){
+      prevBtn.addEventListener("click", ()=>{
+        index = (index - 1 + slides.length) % slides.length;
+        showSlide(index);
+      });
+    }
+
+  });
+
+}
+
+initSlideshows();
+
 
 
 
@@ -220,4 +282,4 @@ function setupGalleryViewer(){
 renderProjects();
 setupModal();
 setupGalleryViewer();
-
+initSlideshows();

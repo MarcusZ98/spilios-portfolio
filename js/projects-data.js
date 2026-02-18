@@ -44,10 +44,11 @@ const projects = [
     "assets/tailwind-tropics/main-menu.png",
     "assets/tailwind-tropics/phase-1.png",
     "assets/tailwind-tropics/round-summary.png",
-    "assets/tailwind-tropics/poster.png"
+    "assets/tailwind-tropics/poster.png",
+    "assets/tailwind-tropics/tailwind-tropics-thumbnail.mp4"
   ],
 
-  detailsPage: "tailwind.html"
+  detailsPage: "tailwind-tropics.html"
 },
 {
   id: "not-a-murder",
