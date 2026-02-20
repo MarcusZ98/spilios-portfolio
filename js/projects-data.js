@@ -18,7 +18,7 @@
    - location: Where the project was developed (e.g., "Stockholm, Sweden").
    - description: A detailed description of the project. You can use HTML tags for formatting (e.g., <br><br> for new paragraphs).
    - gallery: An array of image URLs that will be displayed in the modal gallery.
-   - detailsPage: The filename of the detailed project page you create in the detailed-projects folder (e.g., "my-project.html"). This is used for the "Detailed" button on the project card.
+   - detailsPage: The filename of the detailed project page you create in the detailed-projects folder (e.g., "my-project.html"). This is used for the "Detailed" button on the project card. Can be omitted if you don't have a detailed page
 ========================================= */
 
 const projects = [
@@ -75,8 +75,6 @@ const projects = [
     "assets/not-a-murder/gallery-4.png",
     "assets/not-a-murder/gallery-5.png"
   ],
-
-  detailsPage: "not-a-murder.html"
 },
 {
   id: "mancer",
@@ -137,8 +135,6 @@ const projects = [
 
   gallery: [
   ],
-
-  detailsPage: "cursed-town-hall.html"
 },
 {
   id: "Pathogen Patrol",
@@ -159,7 +155,6 @@ const projects = [
   gallery: [
   ],
 
-  detailsPage: "pathogen-patrol.html"
 },
 
 ];

@@ -11,7 +11,6 @@ function loadComponent(id, file){
     });
 }
 
-/* auto detect depth */
 const path = window.location.pathname.includes("detailed-projects")
   ? "../"
   : "";
@@ -51,6 +50,16 @@ function renderProjects(){
 
     const media = getMediaHTML(project.thumb);
 
+    let detailsBtn = "";
+
+    if(project.detailsPage){
+      detailsBtn = `
+        <a href="detailed-projects/${project.detailsPage}" class="btn-details">
+          Detailed
+        </a>
+      `;
+    }
+
     grid.innerHTML += `
       <div class="project-card">
         ${media}
@@ -63,9 +72,7 @@ function renderProjects(){
               Overview
             </button>
 
-            <a href="detailed-projects/${project.detailsPage}" class="btn-details">
-              Detailed
-            </a>
+            ${detailsBtn}
           </div>
         </div>
       </div>
@@ -88,7 +95,6 @@ function openProjectModal(project){
   const nextProject = projects[(index + 1) % projects.length];
   const prevProject = projects[(index - 1 + projects.length) % projects.length];
 
-  /* BUILD GALLERY */
   let galleryHTML = "";
 
   project.gallery.forEach(file => {
@@ -140,7 +146,7 @@ function openProjectModal(project){
   `;
 
   modal.style.display = "flex";
-  modal.scrollTop = 0; // reset scroll top
+  modal.scrollTop = 0;
 }
 
 
@@ -155,31 +161,26 @@ function setupModal(){
 
   document.addEventListener("click", e => {
 
-    /* OPEN OVERVIEW */
     if(e.target.classList.contains("btn-overview")){
       const id = e.target.dataset.id;
       const project = projects.find(p => p.id === id);
       if(project) openProjectModal(project);
     }
 
-    /* NEXT */
     if(e.target.classList.contains("modal-next")){
       const next = projects.find(p => p.id === e.target.dataset.next);
       if(next) openProjectModal(next);
     }
 
-    /* PREV */
     if(e.target.classList.contains("modal-prev")){
       const prev = projects.find(p => p.id === e.target.dataset.prev);
       if(prev) openProjectModal(prev);
     }
 
-    /* CLOSE BUTTON */
     if(e.target.classList.contains("modal-close")){
       modal.style.display = "none";
     }
 
-    /* CLICK OUTSIDE */
     if(e.target === modal){
       modal.style.display = "none";
     }

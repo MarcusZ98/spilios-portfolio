@@ -95,7 +95,7 @@
 
 .slide{
   display:none;
-  position:relative;
+  width:100%;
 }
 
 .slide.active{
@@ -104,8 +104,8 @@
 
 .slide img{
   width:100%;
+  height:auto;
   display:block;
-  border-radius:14px;
 }
 
 .slide-text{
