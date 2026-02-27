@@ -63,11 +63,10 @@ async function init() {
 }
 
 async function loadShaderSource(name) {
-  const vertex = await fetch(`../shaders/${name}/vertex.glsl`).then(r => r.text());
-  const fragment = await fetch(`../shaders/${name}/fragment.glsl`).then(r => r.text());
+  const vertex = await fetch(new URL(`../shaders/${name}/vertex.glsl`, import.meta.url)).then(r => r.text());
+  const fragment = await fetch(new URL(`../shaders/${name}/fragment.glsl`, import.meta.url)).then(r => r.text());
   return { vertex, fragment };
 }
-
 function animate(time = 0) {
 
   instances.forEach(instance => {
