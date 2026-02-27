@@ -63,10 +63,19 @@ async function init() {
 }
 
 async function loadShaderSource(name) {
-  const vertex = await fetch(new URL(`../shaders/${name}/vertex.glsl`, import.meta.url)).then(r => r.text());
-  const fragment = await fetch(new URL(`../shaders/${name}/fragment.glsl`, import.meta.url)).then(r => r.text());
-  return { vertex, fragment };
+  const base = window.location.pathname.startsWith("/spilios-portfolio")
+    ? "/spilios-portfolio"
+    : "";
+
+  const vertex = await fetch(`${base}/shaders/${name}/vertex.glsl`);
+  const fragment = await fetch(`${base}/shaders/${name}/fragment.glsl`);
+
+  return {
+    vertex: await vertex.text(),
+    fragment: await fragment.text()
+  };
 }
+
 function animate(time = 0) {
 
   instances.forEach(instance => {
