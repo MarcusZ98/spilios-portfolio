@@ -6,11 +6,19 @@ async function init() {
 
   const containers = document.querySelectorAll(".showcase-shader");
 
+    if (isMobile()) {
+    console.log("Shaders disabled on mobile");
+    return;
+  }
   containers.forEach(container => {
     createInstance(container);
   });
 
   animate();
+}
+
+function isMobile() {
+  return window.matchMedia("(max-width: 900px)").matches;
 }
 
 async function createInstance(container) {
