@@ -867,7 +867,7 @@ MOBILE RESPONSIVENESS
   width:auto;
   min-width:unset;
   text-align:center;
-  white-space:nowrap; /* prevents weird stretching */
+  white-space:nowrap;
 }
 
   .modal-gallery{

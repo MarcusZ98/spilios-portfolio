@@ -63,8 +63,8 @@ async function init() {
 }
 
 async function loadShaderSource(name) {
-  const vertex = await fetch(`/shaders/${name}/vertex.glsl`).then(r => r.text());
-  const fragment = await fetch(`/shaders/${name}/fragment.glsl`).then(r => r.text());
+  const vertex = await fetch(`/spilios-portfolio/shaders/${name}/vertex.glsl`).then(r => r.text());
+  const fragment = await fetch(`/spilios-portfolio/shaders/${name}/fragment.glsl`).then(r => r.text());
   return { vertex, fragment };
 }
 
