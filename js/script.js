@@ -7,15 +7,7 @@ function loadComponent(id, file){
     .then(res => res.text())
     .then(data => {
       const el = document.getElementById(id);
-      if(el) {
-        el.innerHTML = data;
-
-        if(id === "header") {
-          el.querySelectorAll("[data-page]").forEach(link => {
-            link.setAttribute("href", path + link.dataset.page);
-          });
-        }
-      }
+      if(el) el.innerHTML = data;
     });
 }
 
