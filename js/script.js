@@ -96,6 +96,13 @@ function openProjectModal(project){
   const prevProject = projects[(index - 1 + projects.length) % projects.length];
 
   let galleryHTML = "";
+  const detailsLink = project.detailsPage
+    ? `
+      <a href="detailed-projects/${project.detailsPage}" class="modal-btn modal-details">
+        Detailed View
+      </a>
+    `
+    : "";
 
   project.gallery.forEach(file => {
     const ext = file.split('.').pop().toLowerCase();
@@ -135,9 +142,7 @@ function openProjectModal(project){
         ← Previous
       </button>
 
-      <a href="detailed-projects/${project.detailsPage}" class="modal-btn modal-details">
-        Detailed View
-      </a>
+      ${detailsLink}
 
       <button class="modal-btn modal-next" data-next="${nextProject.id}">
         Next →

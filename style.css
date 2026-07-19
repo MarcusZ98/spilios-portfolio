@@ -343,7 +343,7 @@ ABOUT PAGE
 .about-hero {
   width: 100%;
   height: 260px;
-  background-image: url("assets/about/about-banner.avif"); 
+  background-image: url("assets/about/about-banner.avif");  /* TODO: Replace this media asset. */
   background-size: cover;
   background-position: center;
   position: relative;
@@ -388,86 +388,6 @@ ABOUT PAGE
   margin-bottom: 22px;
   max-width: 800px;
   color: var(--color-text);
-}
-
-.contact-section {
-  background: var(--color-secondary);
-  padding: 80px 60px;
-}
-
-.contact-inner {
-  max-width: 1000px;
-  margin: auto;
-  color: var(--color-text);
-}
-
-.contact-section h2 {
-  font-size: 40px;
-  margin-bottom: 10px;
-}
-
-.contact-sub {
-  margin-bottom: 25px;
-}
-
-/* ================================================
-CONTACT SECTION 
-==================================================*/
-
-.contact-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 30px;
-  align-items: start;
-}
-
-.contact-left {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-
-.contact-left input {
-  padding: 14px;
-  border-radius: 10px;
-  border: 1px solid #bbb;
-  font-size: 15px;
-}
-
-.contact-linkedin img {
-  width: 28px;
-  margin-bottom: 10px;
-}
-
-.contact-right textarea {
-  width: 100%;
-  height: 180px;
-  padding: 14px;
-  border-radius: 10px;
-  border: 1px solid #bbb;
-  font-size: 15px;
-  resize: none;
-}
-
-.contact-btn {
-  margin-top: 25px;
-  padding: 14px 40px;
-  background: var(--color-accent);
-  color: var(--color-text);
-  border: none;
-  border-radius: 10px;
-  font-size: 16px;
-  float: right;
-  cursor: pointer;
-  transition: 
-    transform 0.25s ease,
-    box-shadow 0.25s ease;
-}
-
-.contact-btn:hover {
-  background: var(--color-hover);
-  transform: scale(1.06);
-  box-shadow: 0 8px 25px var(--color-hover);
 }
 
 /* ================================================
@@ -824,15 +744,6 @@ MOBILE RESPONSIVENESS
 
   .portfolio-text h2 {
     font-size: 42px;
-  }
-
-    .contact-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .contact-btn {
-    width: 100%;
-    float: none;
   }
 
   .project-overlay{
