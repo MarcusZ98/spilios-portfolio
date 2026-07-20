@@ -74,6 +74,7 @@ const projects = [
       "assets/not-a-murder/gallery-4.png", // TODO: Replace this media asset.
       "assets/not-a-murder/gallery-5.png" // TODO: Replace this media asset.
     ],
+    detailsPage: "not-a-murder.html"
   },
   {
     id: "mancer",
