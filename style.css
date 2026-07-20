@@ -26,12 +26,6 @@ body {
   padding-top: 60px;
 }
 
-.page-wrapper {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-}
-
 main {
   flex: 1;
 }
@@ -208,11 +202,6 @@ ABOUT SECTION
   width:36px;
   height:36px;
   color:var(--color-accent);  
-}
-
-.about-icons img {
-  width: 28px;
-  margin-right: 6px;
 }
 
 .about-btn {
@@ -520,11 +509,6 @@ PROJECTS PAGE
   margin: auto;
 }
 
-
-@keyframes popup{
-  from{ transform:scale(.9); opacity:0; }
-  to{ transform:scale(1); opacity:1; }
-}
 
 .modal-close {
   position: absolute;
